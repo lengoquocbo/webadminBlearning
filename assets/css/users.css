@@ -1,0 +1,103 @@
+/* Container tổng thể */
+.main-content {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Tiêu đề và thanh công cụ */
+.main-content h1.h2 {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.btn-outline-primary i {
+    margin-right: 5px;
+}
+
+/* Thông báo */
+.alert {
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+/* Card */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border: none;
+}
+
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Form tìm kiếm */
+.card-header form .form-control,
+.card-header form .form-select {
+    border-radius: 6px;
+}
+
+.card-header .btn {
+    border-radius: 6px;
+}
+
+/* Table */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #f1f3f5;
+    color: #495057;
+    font-weight: 600;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+/* Badge loại tài khoản */
+.badge.bg-primary {
+    background-color: #007bff;
+}
+
+.badge.bg-info {
+    background-color: #17a2b8;
+}
+
+.badge.bg-success {
+    background-color: #28a745;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545;
+}
+
+/* Hành động */
+.table .btn {
+    margin-right: 5px;
+    border-radius: 4px;
+}
+
+/* Phân trang */
+.pagination .page-item .page-link {
+    border-radius: 6px;
+    color: #007bff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+/* Responsive fix nhỏ */
+@media (max-width: 768px) {
+    .card-header form .col-md-4,
+    .card-header form .col-md-3,
+    .card-header form .col-md-2 {
+        width: 100%;
+    }
+}

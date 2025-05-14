@@ -1,0 +1,52 @@
+
+/* class.css */
+
+.main-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+ width: 105%; /* Tăng chiều rộng lên 95% */
+    margin: 0 auto; /* Căn giữa nội dung */}
+
+h1.h2 {
+    color: #333;
+    font-weight: bold;
+}
+
+.btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.alert {
+    margin-top: 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #007bff;
+    padding: 15px 20px;
+    font-weight: bold;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}

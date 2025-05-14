@@ -1,0 +1,12 @@
+# Bật rewrite nếu module mod_rewrite có sẵn
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Rewrite mọi request về index.php nếu không phải là file hay folder có thật
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Bỏ phần ngăn truy cập các file PHP khác, vì bạn đang cần gọi các controller PHP
+# Nếu muốn bảo vệ file riêng, nên tạo .htaccess trong từng thư mục như /API hoặc /config
