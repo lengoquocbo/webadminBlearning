@@ -1,12 +1,12 @@
 <?php
+session_start();
 require_once 'config.php';
 require_once 'API/ApiClient.php';
 require_once 'API/Auth.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 
 $apiClient = new ApiClient(API_BASE_URL);
+
 $auth = new Auth($apiClient);
 
 // Đặt múi giờ Việt Nam
@@ -37,24 +37,24 @@ switch ($path) {
         $controller->index();
         break;
 
-    case 'users.php':
-        require_once 'controllers/UserController.php';
-        $controller = new UserController();
+   case 'users':
+    require_once 'controllers/UserController.php';
+    $controller = new UserController();
 
-        switch ($action) {
-            case 'create':
-                $controller->create();
-                break;
-            case 'edit':
-                $controller->edit($id);
-                break;
-            case 'view':
-                $controller->view($id);
-                break;
-            default:
-                $controller->getAlluser();
-        }
-        break;
+    switch ($action) {
+        case 'edit':
+            $controller->edit($id);
+            break;
+        case 'view':
+            $controller->view($id);
+            break;
+        case 'delete':
+            $controller->delete($id);
+            break;
+        default:
+            $controller->getAlluser();
+    }
+    break;
 
     case 'classes.php':
         require_once 'controllers/ClassController.php';
@@ -79,7 +79,10 @@ switch ($path) {
         break;
 
     default:
-        // Nếu không khớp route nào → redirect về dashboard
-header('Location: views/dashboard/dashboard.php');
-        exit;
+    
+    assert($path !== 'index.php', 'Không được phép truy cập trực tiếp vào index.php');
+    header('Location: /WebAdmin_Blearning/views/auth/login.php');
+    exit;
+    // Nếu không khớp route nào → redirect về dashboard
+
 }

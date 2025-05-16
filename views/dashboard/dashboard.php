@@ -1,6 +1,14 @@
 <?php
+session_start(); // Thêm dòng này ở đầu file
+
 include_once __DIR__ . '/../layouts/header.php';
 require_once __DIR__ . '/../../controllers/DashboardController.php';
+$apiClient = new ApiClient(API_BASE_URL);
+$auth = new Auth($apiClient);
+if (!$auth->isLoggedIn()) {
+    header('Location: /WebAdmin_Blearning/views/auth/login.php');
+    exit;
+}
 
 // Khởi tạo DashboardController
 $dashboardController = new DashboardController();

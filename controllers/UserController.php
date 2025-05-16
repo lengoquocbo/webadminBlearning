@@ -128,50 +128,53 @@ public function getAlluser()
 }
 
 
+///////////////////////////////////////////////////////////////////
+    // public function create()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         $userData = [
+    //             'email' => $_POST['email'] ?? '',
+    //             'password' => $_POST['password'] ?? '',
+    //             'username' => $_POST['username'] ?? '',
+    //             'sdt' => $_POST['sdt'] ?? '',
+    //             'role' => $_POST['role'] ?? 'STUDENT'|| 'TEACHER',
 
-    public function create()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userData = [
-                'email' => $_POST['email'] ?? '',
-                'password' => $_POST['password'] ?? '',
-                'username' => $_POST['username'] ?? '',
-                'sdt' => $_POST['sdt'] ?? '',
-                'role' => $_POST['role'] ?? 'STUDENT'|| 'TEACHER',
-
-            ];
+    //         ];
             
-            try {
-                $response = $this->apiClient->post('/admin/create/users', $userData);
-                header('Location: /admin/users.php?success=1');
-                exit;
-            } catch (Exception $e) {
-                $error = "Có lỗi xảy ra: " . $e->getMessage();
-            }
-        }
+    //         try {
+    //             $response = $this->apiClient->post('/admin/create/users', $userData);
+    //             header('Location: /admin/users.php?success=1');
+    //             exit;
+    //         } catch (Exception $e) {
+    //             $error = "Có lỗi xảy ra: " . $e->getMessage();
+    //         }
+    //     }
         
-        require_once 'views/users/create.php';
-    }
+    //     require_once 'views/users/create.php';
+    // }
     
     public function edit($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userData = [
-                'fullName' => $_POST['fullName'] ?? '',
+                'username' => $_POST['username'] ?? '',
                 'email' => $_POST['email'] ?? '',
+                'sdt' => $_POST['sdt'] ?? '',
                 'password' => $_POST['password'] ?? '',
+                'role' => $_POST['role'] ?? 'STUDENT'|| 'TEACHER'|| 'ADMIN',
             ];
             
             try {
-                $response = $this->apiClient->put('/api/admin/users/' . $id, $userData);
-                header('Location: /admin/users.php?success=1');
+                $response = $this->apiClient->put('users/admin/update/users/' . $id, $userData);
+                header('Location: /WebAdmin_Blearning/views/user/index.php' . $id . '&success=1');
                 exit;
             } catch (Exception $e) {
-                $error = "Có lỗi xảy ra: " . $e->getMessage();
+                echo "<script>alert('Cập nhật thành công!');</script>";
+                
             }
         }
         
-        $user = $this->apiClient->get('/api/admin/users/' . $id);
+        $user = $this->apiClient->get('users/admin/get/users/' . $id);
         require_once 'views/users/edit.php';
     }
     
@@ -181,22 +184,40 @@ public function getAlluser()
         require_once 'views/users/view.php';
     }
     
-    // public function changeStatus($id)
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $active = $_POST['active'] ?? '0';
-    //         $active = $active === '1';
-            
-    //         try {
-    //             $response = $this->apiClient->patch('/api/admin/users/' . $id . '/status', [
-    //                 'active' => $active
-    //             ]);
-    //             header('Location: /admin/users.php?success=1');
-    //             exit;
-    //         } catch (Exception $e) {
-    //             $error = "Có lỗi xảy ra: " . $e->getMessage();
-    //             require_once 'views/users/index.php';
-    //         }
-    //     }
-    // }
+    public function delete($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $response = $this->apiClient->delete('users/delete/' . $id);
+                header('Location: /WebAdmin_Blearning/views/users/index.php?success=1');
+                exit;
+            } catch (Exception $e) {
+                $error = "Có lỗi xảy ra: " . $e->getMessage();
+            }
+        }
+    }
+    public function search()
+    {
+        $search = $_GET['search'] ?? '';
+        $page = $_GET['page'] ?? 1;
+        $pageSize = $_GET['pageSize'] ?? 10;
+
+        $params = [
+            'search' => $search,
+            'page' => $page,
+            'pageSize' => $pageSize
+        ];
+
+        $response = $this->apiClient->get('users/admin/get/users', $params);
+
+        if (isset($response['data'])) {
+            return $response['data'];
+        } elseif (isset($response['results'])) {
+            return $response['results'];
+        } elseif (isset($response['users'])) {
+            return $response['users'];
+        }
+
+        return [];
+    }
 }

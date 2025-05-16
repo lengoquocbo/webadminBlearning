@@ -15,47 +15,44 @@ class AuthController
         $this->auth = new Auth($this->apiClient);
     }
 
-    public function login()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
+public function login()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
 
-            if (empty($email) || empty($password)) {
-                $error = "Vui lòng nhập email và mật khẩu";
-                require_once __DIR__ . '/../views/auth/login.php';
-                return;
-            }
-
-            if ($this->auth->login($email, $password)) {
-header('Location: /WebAdmin_Blearning/views/dashboard/dashboard.php');                exit;
-            } else {
-                $error = "Email hoặc mật khẩu không đúng";
-                require_once __DIR__ . '/../views/auth/login.php';
-                return;
-            }
+        if (empty($email) || empty($password)) {
+            $error = "Vui lòng nhập email và mật khẩu";
+            require_once __DIR__ . '/../views/auth/login.php';
+            return;
         }
 
-        require_once __DIR__ . '/../views/auth/login.php';
+        if ($this->auth->login($email, $password)) {
+            // Lấy thông tin user sau khi đăng nhập
+            $user = $this->auth->getUser(); // Hàm này phải trả về thông tin user, bao gồm 'role'
+            if (isset($user['role']) && strtoupper($user['role']) === 'ADMIN') {
+                header('Location: /WebAdmin_Blearning/views/dashboard/dashboard.php');
+                exit;
+            } else {
+                echo "<script>alert('Chỉ tài khoản ADMIN mới được đăng nhập!');window.location.href='/WebAdmin_Blearning/views/auth/login.php;</script>";
+                $this->auth->logout();
+                require_once __DIR__ . '/../views/auth/login.php';
+                return;
+            }
+        } else {
+            $error = "Email hoặc mật khẩu không đúng";
+            require_once __DIR__ . '/../views/auth/login.php';
+            return;
+        }
     }
+
+    require_once __DIR__ . '/../views/auth/login.php';
+}
 
     public function logout()
     {
         // Xóa token khỏi session
-        if (isset($_SESSION['token'])) {
-            unset($_SESSION['token']);
-        }
-
-        // Xóa token khỏi cookie
-        if (isset($_COOKIE['token'])) {
-            setcookie('token', '', time() - 3600, '/'); // Xóa cookie
-        }
-
-        // Xóa toàn bộ session
-        session_destroy();
-
-        // Chuyển hướng về trang đăng nhập
-        header('Location: views/auth/login.php');
-        exit;
+        $this->auth->logout();
+        
     }
 }

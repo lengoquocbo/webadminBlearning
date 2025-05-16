@@ -1,4 +1,4 @@
-<?php 
+<?php
 include '../../views/layouts/header.php';
 require_once __DIR__ . '/../../controllers/UserController.php';
 
@@ -7,19 +7,15 @@ $users = $controller->getAlluser();
 ?>
 
 <div class="main-content">
-    <?php 
-    $page = 'users'; 
-    $showSidebar = true; 
+    <?php
+    $page = 'users';
+    $showSidebar = true;
     ?>
 
     <!-- Tiêu đề và nút thêm -->
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Quản lý tài khoản</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="/admin/users.php?action=create" class="btn btn-sm btn-outline-primary">
-                <i class="fas fa-plus"></i> Thêm mới
-            </a>
-        </div>
+
     </div>
 
     <!-- Thông báo -->
@@ -61,7 +57,6 @@ $users = $controller->getAlluser();
                             <th>Email</th>
                             <th>Số điện thoại</th>
                             <th>Vai trò</th>
-                            <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -78,38 +73,27 @@ $users = $controller->getAlluser();
                                     <td><?php echo htmlspecialchars($user['email']); ?></td>
                                     <td><?php echo htmlspecialchars($user['sdt']); ?></td>
                                     <td>
-                                        <?php 
-                                            $role = strtoupper($user['role']);
-                                            if ($role === 'TEACHER') {
-                                                echo '<span class="badge bg-primary">Giáo viên</span>';
-                                            } elseif ($role === 'STUDENT') {
-                                                echo '<span class="badge bg-info">Học sinh</span>';
-                                            } elseif ($role === 'ADMIN') {
-                                                echo '<span class="badge bg-warning">Admin</span>';
-                                            } else {
-                                                echo '<span class="badge bg-secondary">Khác</span>';
-                                            }
+                                        <?php
+                                        $role = strtoupper($user['role']);
+                                        if ($role === 'TEACHER') {
+                                            echo '<span class="badge bg-primary">Giáo viên</span>';
+                                        } elseif ($role === 'STUDENT') {
+                                            echo '<span class="badge bg-info">Học sinh</span>';
+                                        } elseif ($role === 'ADMIN') {
+                                            echo '<span class="badge bg-warning">Admin</span>';
+                                        } else {
+                                            echo '<span class="badge bg-secondary">Khác</span>';
+                                        }
                                         ?>
                                     </td>
+
                                     <td>
-                                        <?php if (!isset($user['active']) || $user['active']): ?>
-                                            <span class="badge bg-success">Hoạt động</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger">Không hoạt động</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/users.php?action=view&id=<?php echo urlencode($user['userID']); ?>" class="btn btn-sm btn-info">
-                                            <i class="fas fa-eye"></i> Xem
-                                        </a>
-                                        <a href="/admin/users.php?action=edit&id=<?php echo urlencode($user['userID']); ?>" class="btn btn-sm btn-primary">
+                                        <a href="/WebAdmin_Blearning/index.php?path=users&action=edit&id=<?php echo urlencode($user['userID']); ?>" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i> Sửa
                                         </a>
-                                        <form method="POST" action="/admin/users.php?action=changeStatus&id=<?php echo urlencode($user['userID']); ?>" class="d-inline">
-                                            <input type="hidden" name="active" value="<?php echo (!isset($user['active']) || $user['active']) ? '0' : '1'; ?>">
-                                            <button type="submit" class="btn btn-sm <?php echo (!isset($user['active']) || $user['active']) ? 'btn-danger' : 'btn-success'; ?>" onclick="return confirm('Bạn có chắc chắn muốn thay đổi trạng thái tài khoản này?')">
-                                                <i class="fas <?php echo (!isset($user['active']) || $user['active']) ? 'fa-ban' : 'fa-check'; ?>"></i>
-                                                <?php echo (!isset($user['active']) || $user['active']) ? 'Vô hiệu hóa' : 'Kích hoạt'; ?>
+                                        <form method="POST" action="/WebAdmin_Blearning/index.php?path=users&action=delete&id=<?php echo urlencode($user['userID']); ?>" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">
+                                                <i class="fas fa-trash"></i> Vô hiệu hóa
                                             </button>
                                         </form>
                                     </td>
@@ -125,13 +109,14 @@ $users = $controller->getAlluser();
 
 <!-- Scrollbar đẹp -->
 <style>
-.table-responsive::-webkit-scrollbar {
-    width: 6px;
-}
-.table-responsive::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 3px;
-}
+    .table-responsive::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 3px;
+    }
 </style>
 
 <?php include '../../views/layouts/footer.php'; ?>

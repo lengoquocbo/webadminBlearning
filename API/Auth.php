@@ -80,7 +80,7 @@ class Auth
         session_destroy();
 
         // Chuyển hướng về trang đăng nhập (dùng đường dẫn tương đối)
-        header('Location: index.php?path=auth/login.php');
+        header('Location: views/auth/login.php');
         exit;
     }
 

@@ -152,22 +152,24 @@ class ClassController
         }
     }
     
-    public function view($id)
-    {
-        try {
-            // Lấy thông tin chi tiết lớp học
-            $class = $this->apiClient->get('/api/admin/classes/' . $id);
-            
-            // Lấy danh sách học sinh trong lớp
-            $students = $this->apiClient->get('/api/admin/classes/' . $id . '/students')['data'] ?? [];
-            
-            require_once __DIR__ . '/../views/classes/view.php';
-        } catch (Exception $e) {
-            $error = "Lỗi khi lấy dữ liệu: " . $e->getMessage();
-            header('Location: /admin/classes.php?error=' . urlencode($error));
-            exit;
-        }
+public function view($id)
+{
+    try {
+        // Lấy thông tin chi tiết lớp học
+
+        // Lấy danh sách học sinh trong lớp theo router class/students/{ID}
+        $response = $this->apiClient->get('class/students/' . $id);
+        $students = $response;
+        if (!is_array($students)) {
+    $students = [$students];
+      }
+        require_once __DIR__ . '/../views/classes/view.php';
+    } catch (Exception $e) {
+        $error = "Lỗi khi lấy dữ liệu: " . $e->getMessage();
+        header('Location: /admin/classes.php?error=' . urlencode($error));
+        exit;
     }
+}
     
     public function delete($id)
     {

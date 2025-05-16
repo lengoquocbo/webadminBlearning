@@ -26,24 +26,24 @@
             <div class="collapse navbar-collapse" id="topNavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $page === 'dashboard' ? 'active' : ''; ?>" href="../dashboard/dashboard.php">
+                        <a class="nav-link <?php echo $page === 'dashboard' ? 'active' : ''; ?>" href="/WebAdmin_Blearning/views/dashboard/dashboard.php">
                             <i class="fas fa-tachometer-alt"></i> Tổng quan
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $page === 'users' ? 'active' : ''; ?>" href="../users/index.php">
+                        <a class="nav-link <?php echo $page === 'users' ? 'active' : ''; ?>" href="/WebAdmin_Blearning/views/users/index.php">
                             <i class="fas fa-users"></i> Tài khoản
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $page === 'classes' ? 'active' : ''; ?>" href="../classes/index.php">
+                        <a class="nav-link <?php echo $page === 'classes' ? 'active' : ''; ?>" href="/WebAdmin_Blearning/views/classes/index.php">
                             <i class="fas fa-school"></i> Lớp học
                         </a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.php?path=logout.php">
+                    <a class="nav-link" href="index.php?path=logout.php">
                             <i class="fas fa-sign-out-alt"></i> Đăng xuất
                         </a>
                     </li>
